@@ -114,10 +114,12 @@ function convertInline(document, node, lang, base) {
       return;
     }
     let wrapped = inner;
+    // formatting is added where it starts, i.e. relative to the parent element
     const cs = styleOf(child);
-    const bold = Number(cs.fontWeight) >= 600 && !(Number(base.fontWeight) >= 600);
-    const italic = cs.fontStyle === 'italic' && base.fontStyle !== 'italic';
-    const colored = base.highlight && cs.color === ORANGE && base.color !== ORANGE;
+    const ps = styleOf(child.parentElement);
+    const bold = Number(cs.fontWeight) >= 600 && Number(ps.fontWeight) < 600;
+    const italic = cs.fontStyle === 'italic' && ps.fontStyle !== 'italic';
+    const colored = base.highlight && cs.color === ORANGE && ps.color !== ORANGE;
     if ((bold || colored) && inner.textContent.trim()) {
       const s = document.createElement('strong');
       s.append(wrapped);

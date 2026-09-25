@@ -138,7 +138,7 @@
     padding: 56px 20px 40px;
   }
 
-  .columns > div > div > * {
+  .columns > div > div:not(.columns-img-col) > * {
     box-sizing: border-box;
     width: 100%;
     max-width: 460px;
