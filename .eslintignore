@@ -1,2 +1,3 @@
 helix-importer-ui
-*.min.jsmigration-work
+*.min.js
+migration-work
