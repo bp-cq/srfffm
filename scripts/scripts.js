@@ -11,6 +11,13 @@ import {
   loadCSS,
   buildBlock,
 } from './aem.js';
+import {
+  LANGUAGES,
+  getLanguage,
+  getLocalizedPath,
+  getPreferredLanguage,
+  isLocalizedPath,
+} from './i18n.js';
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
   const innerTT = window.trustedTypes.createPolicy('tt-inner', {
@@ -156,11 +163,38 @@ export function decorateMain(main) {
 }
 
 /**
+ * Sends visitors of the site root to the language folder matching their browser preferences.
+ * @returns {boolean} true if a redirect was started
+ */
+function redirectToPreferredLanguage() {
+  const { pathname, search, hash } = window.location;
+  if (pathname !== '/' && pathname !== '/index') return false;
+  window.location.replace(`/${getPreferredLanguage()}/${search}${hash}`);
+  return true;
+}
+
+/**
+ * Adds hreflang alternates for the language versions of the current page.
+ */
+function addLanguageAlternates() {
+  if (!isLocalizedPath()) return;
+  const links = [...LANGUAGES.map((lang) => [lang, getLocalizedPath(lang)]), ['x-default', '/']];
+  links.forEach(([hreflang, path]) => {
+    const link = document.createElement('link');
+    link.rel = 'alternate';
+    link.hreflang = hreflang;
+    link.href = new URL(path, window.location).href;
+    document.head.append(link);
+  });
+}
+
+/**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
-  document.documentElement.lang = 'en';
+  document.documentElement.lang = getLanguage();
+  addLanguageAlternates();
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
@@ -209,6 +243,7 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  if (redirectToPreferredLanguage()) return;
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();

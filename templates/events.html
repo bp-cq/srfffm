@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{pageTitle}}</title>
+</head>
+<body>
+  <header></header>
+  <main>
+    <div>
+      <div class="fragment">
+        <div>
+          <div><p><a href="/{{lang}}/fragments/events-intro">/{{lang}}/fragments/events-intro</a></p></div>
+        </div>
+      </div>
+    </div>
+    <div>
+      {{#hasEvents}}
+      <div class="events">
+        {{#events}}
+        <div>
+          <div><p>{{day}}</p><p>{{month}}</p><p>{{weekday}}</p></div>
+          <div><p>{{time}}</p></div>
+          <div>
+            <h3>{{title}}</h3>
+            {{{description}}}
+            {{#location}}<p>{{location}}</p>{{/location}}
+            <ul>
+              <li><a href="{{google}}">Google</a></li>
+              <li><a href="{{outlook}}">Outlook</a></li>
+              <li><a href="{{ics}}">Apple</a></li>
+              <li><a href="{{yahoo}}">Yahoo</a></li>
+            </ul>
+          </div>
+          <div><p>{{start}}</p><p>{{end}}</p></div>
+        </div>
+        {{/events}}
+      </div>
+      {{/hasEvents}}
+      {{^hasEvents}}
+      <p>{{noEvents}}</p>
+      {{/hasEvents}}
+      <div class="section-metadata">
+        <div>
+          <div><p>Style</p></div>
+          <div><p>grey</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="metadata">
+      <div>
+        <div><p>Title</p></div>
+        <div><p>{{pageTitle}}</p></div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

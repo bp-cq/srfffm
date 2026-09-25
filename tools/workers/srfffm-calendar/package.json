@@ -1,0 +1,14 @@
+{
+  "name": "srfffm-calendar",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Worker: Google Calendar ICS feed to JSON for AEM json2html, with cron-triggered republishing",
+  "scripts": {
+    "test": "node --test test/",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

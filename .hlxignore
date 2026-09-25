@@ -6,3 +6,8 @@ package.json
 package-lock.json
 test/*
 sync-block-collection.sh
+
+# migration tooling and working files (not served)
+tools/importer
+tools/workers
+migration-work/

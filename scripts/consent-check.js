@@ -1,25 +1,22 @@
+import { getConsent } from './consent.js';
+
 let consentedLoaded = false;
 
 /**
- * Dummy consent implementation.
+ * Consent check.
  *
- * By default consent is declined, so consented scripts (analytics, martech, etc.)
- * are not loaded. This stands in for a real CMP (OneTrust, etc.) and can be
- * swapped out later.
+ * Consent is declined until the visitor accepts it in the cookie banner (see the footer
+ * block), so consented scripts (analytics, martech, etc.) are not loaded by default.
+ * This stands in for a real CMP (OneTrust, etc.) and can be swapped out later.
  *
- * The default can be overridden with a query parameter for testing:
+ * The stored choice can be overridden with a query parameter for testing:
  *   ?consent=accept   grant consent (loads consented.js)
  *   ?consent=decline  decline consent (default behavior)
  *
  * @returns {boolean} true if the user has consented
  */
 function hasConsent() {
-  const consent = new URLSearchParams(window.location.search).get('consent');
-  if (consent !== null) {
-    return ['accept', 'true', '1', 'yes'].includes(consent.toLowerCase());
-  }
-  // default: decline
-  return false;
+  return getConsent() === true;
 }
 
 /**
@@ -42,5 +39,10 @@ function onConsentUpdate() {
     loadConsented();
   }
 }
+
+// consent granted later via the cookie banner
+window.addEventListener('consent.update', (e) => {
+  if (e.detail?.consented) loadConsented();
+});
 
 onConsentUpdate();

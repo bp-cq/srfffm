@@ -1,0 +1,94 @@
+{
+  "templates": [
+    {
+      "name": "home",
+      "urls": [
+        "https://www.srf-frankfurt.de/?lang=de"
+      ],
+      "representativeUrl": "https://www.srf-frankfurt.de/?lang=de",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/"
+    },
+    {
+      "name": "about",
+      "urls": [
+        "https://www.srf-frankfurt.de/about?lang=de"
+      ],
+      "representativeUrl": "https://www.srf-frankfurt.de/about?lang=de",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/*"
+    },
+    {
+      "name": "contact",
+      "urls": [
+        "https://www.srf-frankfurt.de/contact?lang=de"
+      ],
+      "representativeUrl": "https://www.srf-frankfurt.de/contact?lang=de",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/*"
+    },
+    {
+      "name": "imprint",
+      "urls": [
+        "https://www.srf-frankfurt.de/imprint?lang=de"
+      ],
+      "representativeUrl": "https://www.srf-frankfurt.de/imprint?lang=de",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/*"
+    },
+    {
+      "name": "meditation",
+      "urls": [
+        "https://www.srf-frankfurt.de/meditation?lang=de"
+      ],
+      "representativeUrl": "https://www.srf-frankfurt.de/meditation?lang=de",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/*"
+    },
+    {
+      "name": "news",
+      "urls": [
+        "https://www.srf-frankfurt.de/news?lang=de"
+      ],
+      "representativeUrl": "https://www.srf-frankfurt.de/news?lang=de",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/*"
+    },
+    {
+      "name": "privacy-policy",
+      "urls": [
+        "https://www.srf-frankfurt.de/privacy-policy?lang=de"
+      ],
+      "representativeUrl": "https://www.srf-frankfurt.de/privacy-policy?lang=de",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/*"
+    },
+    {
+      "name": "self-realization-fellowship",
+      "urls": [
+        "https://www.srf-frankfurt.de/self-realization-fellowship?lang=de"
+      ],
+      "representativeUrl": "https://www.srf-frankfurt.de/self-realization-fellowship?lang=de",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/*"
+    },
+    {
+      "name": "services",
+      "urls": [
+        "https://www.srf-frankfurt.de/services?lang=de"
+      ],
+      "representativeUrl": "https://www.srf-frankfurt.de/services?lang=de",
+      "description": "To be named in naming step",
+      "blocks": [],
+      "urlPattern": "/*"
+    }
+  ]
+}
