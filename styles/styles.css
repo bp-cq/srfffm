@@ -408,3 +408,8 @@ main > .section.legal a:any-link {
     padding: 0;
   }
 }
+
+/* events page introduction: highlighted notes (e.g. summer break) */
+main > .section.program strong {
+  color: #8a0f34;
+}

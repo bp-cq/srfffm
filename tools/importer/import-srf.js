@@ -453,6 +453,7 @@ export default {
       build(document, main, lang);
       if (slug === 'services') {
         path = `/${lang}/fragments/events-intro`;
+        main.append(sectionMetadata(document, 'program'));
         main.append(metadata(document, { Robots: 'noindex, nofollow' }));
       } else {
         path = `/${lang}/${slug}`;
