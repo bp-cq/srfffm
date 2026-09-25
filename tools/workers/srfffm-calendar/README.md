@@ -73,7 +73,7 @@ No runtime dependencies. Code: `src/ical.js` (parsing, recurrence), `src/format.
 | Var | Value |
 | --- | --- |
 | `ICS_URL` | Public Google Calendar ICS URL |
-| `PUBLIC_URL` | Public base URL of this worker (used for the `ics` links). Placeholder: update after the first deploy. |
+| `PUBLIC_URL` | Public base URL of this worker (used for the `ics` links): `https://srfffm-calendar.benpeter.workers.dev`. |
 | `AEM_ORG`, `AEM_SITE`, `AEM_REF` | `bp-cq`, `srfffm`, `main` |
 | `PAGES` | Comma-separated pages to republish: `/de/services,/en/services` |
 
@@ -145,7 +145,7 @@ Document Authoring document for them. The intro text above the list is the DA do
 3. Preview and publish `/de/services` and `/en/services` once (or wait for the first cron run,
    which publishes them because no feed hash is stored yet).
 
-If the worker URL changes, update `PUBLIC_URL` in `wrangler.toml` and the two `endpoint` values.
+If the worker URL ever changes, update `PUBLIC_URL` in `wrangler.toml` and the two `endpoint` values.
 
 ## Cron behaviour
 

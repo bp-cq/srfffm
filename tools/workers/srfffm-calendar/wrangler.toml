@@ -10,7 +10,7 @@ crons = ["*/15 * * * *"]
 
 [vars]
 ICS_URL = "https://calendar.google.com/calendar/ical/c2381c2045fb161b04fa0c62c08075e6bd3d67ff8236ac1497ed835d7f0e8c42%40group.calendar.google.com/public/basic.ics"
-# Placeholder until the real deployment URL is known (used for the per-event .ics links).
+# Public URL of this worker on the benpeter workers.dev subdomain (used for the per-event .ics links).
 PUBLIC_URL = "https://srfffm-calendar.benpeter.workers.dev"
 AEM_ORG = "bp-cq"
 AEM_SITE = "srfffm"
