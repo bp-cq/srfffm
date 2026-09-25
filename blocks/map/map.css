@@ -33,6 +33,6 @@
 @media (width >= 768px) {
   .map {
     width: 608px;
-    margin: 28px 0 0 168px;
+    margin: 28px auto 57px;
   }
 }

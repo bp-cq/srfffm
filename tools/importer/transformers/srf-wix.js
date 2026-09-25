@@ -120,12 +120,13 @@ function convertInline(document, node, lang, base) {
     const bold = Number(cs.fontWeight) >= 600 && Number(ps.fontWeight) < 600;
     const italic = cs.fontStyle === 'italic' && ps.fontStyle !== 'italic';
     const colored = base.highlight && cs.color === ORANGE && ps.color !== ORANGE;
+    const accent = base.accent && cs.color !== ps.color && cs.color !== base.color;
     if ((bold || colored) && inner.textContent.trim()) {
       const s = document.createElement('strong');
       s.append(wrapped);
       wrapped = s;
     }
-    if (italic && inner.textContent.trim()) {
+    if ((italic || accent) && inner.textContent.trim()) {
       const e = document.createElement('em');
       e.append(wrapped);
       wrapped = e;
@@ -163,7 +164,7 @@ function headingLevel(el) {
  * Consecutive Wix paragraphs are joined with line breaks; empty Wix paragraphs
  * separate paragraphs.
  */
-export function convertRichText(document, el, lang, { highlight = false, allowHeadings = true } = {}) {
+export function convertRichText(document, el, lang, { highlight = false, allowHeadings = true, accent = false } = {}) {
   const out = [];
   let current = null;
   const flush = () => { current = null; };
@@ -191,7 +192,7 @@ export function convertRichText(document, el, lang, { highlight = false, allowHe
     const level = allowHeadings ? headingLevel(child) : null;
     const base = styleOf(child);
     const inline = convertInline(document, child, lang, {
-      fontWeight: base.fontWeight, fontStyle: base.fontStyle, color: base.color, highlight,
+      fontWeight: base.fontWeight, fontStyle: base.fontStyle, color: base.color, highlight, accent,
     });
     if (level) {
       flush();
@@ -216,6 +217,19 @@ export function convertRichText(document, el, lang, { highlight = false, allowHe
     while (node.firstChild && node.firstChild.nodeName === 'BR') node.firstChild.remove();
   });
   return out.filter((n) => n.textContent.trim() || n.querySelector('img'));
+}
+
+/**
+ * Paragraph with a full-bleed (cover) image, requested in the aspect ratio the source shows it
+ * at on a 1440px wide desktop (half width, fixed row height), at 2x resolution.
+ */
+export function coverImageParagraph(document, img, container, { width = 720 } = {}) {
+  const height = Math.round(container.getBoundingClientRect().height);
+  const p = document.createElement('p');
+  const el = createImage(document, img);
+  el.src = el.src.replace(/\/fill\/w_\d+,h_\d+/, `/fill/w_${width * 2},h_${height * 2}`);
+  p.append(el);
+  return p;
 }
 
 /** Wix button to an EDS button paragraph (bold link) */

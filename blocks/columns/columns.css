@@ -164,7 +164,7 @@
 
   /* home page tiles */
   .columns.tiles > div {
-    min-height: 507px;
+    min-height: var(--row-height, 507px);
   }
 
   .columns.tiles > div > .columns-img-col,
@@ -222,7 +222,7 @@
 
   /* split rows: left aligned text beside a full-bleed image */
   .columns.split > div {
-    min-height: 627px;
+    min-height: var(--row-height, 627px);
   }
 
   .columns.split > div > div:not(.columns-img-col) {
@@ -250,6 +250,7 @@
   .columns.wide {
     max-width: var(--content-width);
     margin: auto;
+    font-size: 18px;
   }
 
   .columns.wide > div > div {

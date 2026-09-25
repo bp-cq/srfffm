@@ -14,7 +14,7 @@
  */
 
 import {
-  getLang, getSlug, mapHref, cleanImageUrl, isEmptyText, createImage, imageParagraph, convertRichText,
+  getLang, getSlug, mapHref, cleanImageUrl, coverImageParagraph, isEmptyText, createImage, imageParagraph, convertRichText,
   convertComponents, componentsOf, parseStrip, backgroundImage, hr, sectionMetadata, block, cell,
 } from './transformers/srf-wix.js';
 
@@ -95,8 +95,9 @@ function allContent(el) {
 
 /** Builds a columns row from a parsed strip */
 function columnsRow(document, strip, lang, { coverScale = 2 } = {}) {
-  return parseStrip(strip).map(({ bg, comps }) => {
+  return parseStrip(strip).map(({ col, bg, comps }) => {
     if (!comps.length && bg) {
+      if (coverScale > 1) return cell(document, [coverImageParagraph(document, bg, col)]);
       return cell(document, [imageParagraph(document, bg, { scale: coverScale, lang })]);
     }
     return cell(document, convertComponents(document, comps, lang));
@@ -157,7 +158,7 @@ function buildSrf(document, main, lang) {
     const cells = parseStrip(strip);
     if (cells.length === 1) {
       // quote strip: hidden behind the next strip on the source desktop layout, shown at the end
-      quote = convertComponents(document, cells[0].comps, lang, { allowHeadings: false });
+      quote = convertComponents(document, cells[0].comps, lang, { allowHeadings: false, accent: true });
       return;
     }
     if (!first) main.append(hr(document));
@@ -178,7 +179,7 @@ function buildMeditation(document, main, lang) {
   main.append(block(document, 'Columns', rows), sectionMetadata(document, 'white'), hr(document));
   const quoteComps = sections.flatMap((s) => [...looseComponents(s), ...contentStrips(s)
     .filter((st) => parseStrip(st).length === 1).flatMap((st) => parseStrip(st)[0].comps)]);
-  convertComponents(document, quoteComps, lang, { allowHeadings: false }).forEach((n) => main.append(n));
+  convertComponents(document, quoteComps, lang, { allowHeadings: false, accent: true }).forEach((n) => main.append(n));
   main.append(sectionMetadata(document, 'quote'));
 }
 
@@ -207,14 +208,15 @@ function buildImprint(document, main, lang) {
   const strip = pageSections(document).flatMap((s) => contentStrips(s))[0];
   const [imageCol, textCol] = parseStrip(strip);
   const texts = textCol.comps.filter((c) => c.matches('[data-testid="richTextElement"]'));
-  const nameImage = textCol.comps.find((c) => c.matches('.wixui-image'));
+  const nameImage = pageSections(document).flatMap((s) => allContent(s))
+    .find((c) => c.matches('.wixui-image') && !c.closest('[data-hook="bgLayers"]'));
   const nodes = texts.flatMap((t) => convertRichText(document, t, lang));
   if (nameImage) {
     const p = imageParagraph(document, nameImage.querySelector('img'), { alt: TEXTS[lang].nameImage, lang });
     const anchor = nodes.find((n) => /RStV|TMG/.test(n.textContent));
-    if (anchor) anchor.after(p); else nodes.push(p);
+    nodes.splice(anchor ? nodes.indexOf(anchor) + 1 : nodes.length, 0, p);
   }
-  const rows = [[cell(document, [imageParagraph(document, imageCol.bg, { scale: 2, lang })]), cell(document, nodes)]];
+  const rows = [[cell(document, [coverImageParagraph(document, imageCol.bg, imageCol.col, { width: 480 })]), cell(document, nodes)]];
   main.append(block(document, 'Columns (aside)', rows));
 }
 

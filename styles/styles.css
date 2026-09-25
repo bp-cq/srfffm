@@ -393,3 +393,18 @@ main > .section.legal a:any-link {
     line-height: 1.4;
   }
 }
+
+/* map section (contact): lotus icon to the right of the map */
+@media (width >= 768px) {
+  main > .section.map-container {
+    position: relative;
+    padding: 40px 0;
+  }
+
+  main > .section.map-container > .default-content-wrapper {
+    position: absolute;
+    top: 325px;
+    left: calc(50% + 290px);
+    padding: 0;
+  }
+}
