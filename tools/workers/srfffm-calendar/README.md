@@ -24,6 +24,7 @@ No runtime dependencies. Code: `src/ical.js` (parsing, recurrence), `src/format.
 {
   "lang": "de",
   "title": "Veranstaltungen",
+  "pageTitle": "VERANSTALTUNGEN | srf-frankfurt",
   "calendar": "SRF-Gruppe Frankfurt Rhein-Main",
   "timeZone": "Europe/Berlin",
   "hasEvents": true,
@@ -52,7 +53,7 @@ No runtime dependencies. Code: `src/ical.js` (parsing, recurrence), `src/format.
 }
 ```
 
-- `en`: `title` "Services", `noEvents` "There are currently no scheduled events.", `time`
+- `en`: `title` "Services", `pageTitle` "SERVICES | srf-frankfurt", `noEvents` "There are currently no scheduled events.", `time`
   "10:30 am - 12:30 pm".
 - All-day: `start`/`end` are dates (`end` exclusive, as in ICS), `time` is "Ganztägig" / "All day"
   or "10.08. - 05.09." / "Aug 10 - Sep 5" for multi-day entries. Timed entries spanning days:
@@ -97,6 +98,54 @@ curl -X POST https://admin.hlx.page/config/bp-cq/sites/srfffm/apiKeys.json \
 
 The `value` field of the response is the token. Store it with `wrangler secret put`.
 The worker sends it as `Authorization: token <value>`.
+
+API keys expire (the response contains `expiration`); create a new key and update the secret
+before that date, otherwise the cron runs fail.
+
+## AEM setup (json2html and content overlay)
+
+The events pages `/de/services` and `/en/services` exist only via json2html; there is no
+Document Authoring document for them. The intro text above the list is the DA document
+`/<lang>/fragments/events-intro`, which the template pulls in as a fragment.
+
+1. json2html config (needs an AEM admin token of a site admin):
+
+   ```sh
+   curl -X POST https://json2html.adobeaem.workers.dev/config/bp-cq/srfffm/main \
+     -H "Authorization: token $ADMIN_TOKEN" \
+     -H 'Content-Type: application/json' \
+     -d '[
+       {"path": "/de/services", "endpoint": "https://srfffm-calendar.benpeter.workers.dev/events?lang=de", "template": "/templates/events.html"},
+       {"path": "/en/services", "endpoint": "https://srfffm-calendar.benpeter.workers.dev/events?lang=en", "template": "/templates/events.html"}
+     ]'
+   ```
+
+2. Content source overlay (only after step 1: without a json2html config the overlay answers
+   every path with HTTP 500, which would break previews of all pages). First check that a
+   regular page now gets a 404 from json2html (so previews fall back to Document Authoring) and
+   the events page a 200:
+
+   ```sh
+   curl -s -o /dev/null -w '%{http_code}\n' https://json2html.adobeaem.workers.dev/bp-cq/srfffm/main/de/about     # 404
+   curl -s -o /dev/null -w '%{http_code}\n' https://json2html.adobeaem.workers.dev/bp-cq/srfffm/main/de/services  # 200
+   ```
+
+   Then:
+
+   ```sh
+   curl -X POST https://admin.hlx.page/config/bp-cq/sites/srfffm/content.json \
+     -H "x-auth-token: $ADMIN_TOKEN" \
+     -H 'Content-Type: application/json' \
+     -d '{
+       "source": {"type": "markup", "url": "https://content.da.live/bp-cq/srfffm"},
+       "overlay": {"type": "markup", "url": "https://json2html.adobeaem.workers.dev/bp-cq/srfffm/main"}
+     }'
+   ```
+
+3. Preview and publish `/de/services` and `/en/services` once (or wait for the first cron run,
+   which publishes them because no feed hash is stored yet).
+
+If the worker URL changes, update `PUBLIC_URL` in `wrangler.toml` and the two `endpoint` values.
 
 ## Cron behaviour
 

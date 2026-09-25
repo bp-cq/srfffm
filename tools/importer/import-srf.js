@@ -236,7 +236,12 @@ function buildNav(document, main, lang) {
     const font = getComputedStyle(textEl).fontFamily;
     if (font !== lastFont) lines.push([]);
     lastFont = font;
-    lines[lines.length - 1].push(a.textContent.trim());
+    // keep line breaks inside a link (the English lettering is one link over two lines)
+    const clone = a.cloneNode(true);
+    clone.querySelectorAll('br').forEach((br) => br.replaceWith('\n'));
+    clone.querySelectorAll('p, div').forEach((el) => el.append('\n'));
+    clone.textContent.split('\n').map((t) => t.trim()).filter(Boolean)
+      .forEach((t) => lines[lines.length - 1].push(t));
   });
   lines.forEach((parts) => {
     const p = document.createElement('p');
