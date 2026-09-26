@@ -342,7 +342,7 @@ main > .section.intro strong {
   }
 
   main > .section.intro > .default-content-wrapper {
-    min-height: 88px;
+    min-height: 72px;
     padding: 0 5px 0 0;
   }
 }
