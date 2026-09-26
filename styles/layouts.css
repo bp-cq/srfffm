@@ -534,6 +534,7 @@
 
   .contact main .section.map-container {
     padding: 0 0 calc(10 * var(--m));
+    background-color: var(--white-color);
   }
 
   .contact main .section.map-container > .map-wrapper {

@@ -103,6 +103,7 @@ footer .footer li a:any-link {
     width: 172px;
     margin: 0;
     line-height: 1.4;
+    white-space: nowrap;
   }
 
   footer .footer li + li {
