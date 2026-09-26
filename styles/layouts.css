@@ -555,13 +555,14 @@
     display: flow-root;
     position: relative;
     width: 980px;
-    height: 542px;
+    min-height: 517px;
     margin: 0 auto;
   }
 
   .contact main .columns > div > div:nth-child(1) {
     --mt: 33;
 
+    padding-bottom: 43px;
     font-size: 18px;
     line-height: 25.2px;
   }
@@ -641,7 +642,7 @@
 
 @media (width >= 768px) {
   .imprint main .columns > div > .columns-img-col {
-    flex: 0 0 479px;
+    flex: 0 0 33.2639%;
   }
 
   .imprint main .columns > div > div:not(.columns-img-col) {
@@ -688,5 +689,63 @@
     width: auto;
     margin-bottom: 18.4px;
     margin-left: calc((100% - 654px) / 2 - 1px);
+  }
+}
+
+/*
+ * English pages: the source styles several English texts differently from the German
+ * ones (line heights, blank lines); these values follow the English source pages.
+ */
+@media (width >= 768px) {
+  :lang(en) main > .section.intro {
+    line-height: 28px;
+  }
+
+  :lang(en) .slideshow .slideshow-text em {
+    font-size: 20px;
+  }
+
+  :lang(en) .columns.tiles .columns-text p + p {
+    line-height: 30.6px;
+  }
+
+  :lang(en) footer .footer p {
+    line-height: 28.8px;
+  }
+
+  :lang(en) footer .footer > div:not(.consent-banner) {
+    min-height: 298.6px;
+    padding-top: 29.6px;
+  }
+
+  :lang(en) footer .footer ul {
+    top: 211.6px;
+  }
+
+  :lang(en).news main .columns > div > div:not(.columns-img-col) > :first-child {
+    margin-top: 30px;
+    margin-bottom: 2px;
+  }
+
+  :lang(en).news main .columns h4 {
+    margin-bottom: 46px;
+  }
+
+  :lang(en).meditation main .columns > div:nth-child(2) > div:nth-child(1) {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  :lang(en).meditation main .section.quote p {
+    color: var(--text-color);
+  }
+
+  :lang(en).imprint main .columns > div > div:not(.columns-img-col) {
+    line-height: 28.8px;
+  }
+
+  :lang(en).imprint main .columns p:has(> strong:only-child),
+  :lang(en).imprint main .columns p:has(> picture) ~ p {
+    line-height: 28px;
   }
 }
