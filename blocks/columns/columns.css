@@ -302,6 +302,7 @@
   }
 
   .columns.tiles > div:nth-child(2) {
+    --tile-h-dy: 0;
     --tile-h-lh: 50.4;
     --tile-h-mt: 82;
     --tile-h-mb: 31;
@@ -317,6 +318,7 @@
   }
 
   .columns.tiles > div:nth-child(3) {
+    --tile-h-dy: 0;
     --tile-h-lh: 50.4;
     --tile-h-mt: 36;
     --tile-h-mb: 15;
