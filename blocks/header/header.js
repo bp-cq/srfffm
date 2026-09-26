@@ -6,8 +6,12 @@ import { loadFragment } from '../fragment/fragment.js';
 const isDesktop = window.matchMedia('(min-width: 768px)');
 
 const LABELS = {
-  de: { open: 'Navigation öffnen', close: 'Navigation schließen', languages: 'Sprache wählen' },
-  en: { open: 'Open navigation', close: 'Close navigation', languages: 'Choose language' },
+  de: {
+    open: 'Navigation öffnen', close: 'Navigation schließen', languages: 'Sprache wählen', top: 'Nach oben',
+  },
+  en: {
+    open: 'Open navigation', close: 'Close navigation', languages: 'Choose language', top: 'Back to top',
+  },
 };
 
 /**
@@ -129,4 +133,25 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
+
+  // phones: the header slides away on scroll-down and comes back on scroll-up;
+  // a back-to-top button appears once the page is scrolled
+  const header = block.closest('header');
+  const toTop = document.createElement('button');
+  toTop.type = 'button';
+  toTop.className = 'back-to-top';
+  toTop.setAttribute('aria-label', LABELS[getLanguage()].top);
+  toTop.innerHTML = '<img src="/icons/back-to-top.svg" alt="" width="50" height="50">';
+  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  document.body.append(toTop);
+  let lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    const hide = !isDesktop.matches && y > lastY && y > header.offsetHeight
+      && nav.getAttribute('aria-expanded') !== 'true';
+    if (y < lastY || y <= header.offsetHeight) header.classList.remove('nav-hidden');
+    else if (hide) header.classList.add('nav-hidden');
+    toTop.classList.toggle('visible', y > 100);
+    lastY = y;
+  }, { passive: true });
 }

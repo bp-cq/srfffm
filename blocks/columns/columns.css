@@ -1,6 +1,6 @@
 /* stylelint-disable no-descending-specificity -- variant rules intentionally override base rules */
 
-/* mobile: columns stack, image-only columns first */
+/* phones: columns stack in source order */
 .columns > div {
   display: flex;
   flex-direction: column;
@@ -8,12 +8,7 @@
 
 .columns > div > div {
   box-sizing: border-box;
-  order: 1;
   padding: calc(20 * var(--m));
-}
-
-.columns > div > .columns-img-col {
-  order: 0;
 }
 
 /* inset images are imported at their display size */
@@ -36,8 +31,8 @@
   display: none;
 }
 
-/* image captions (small italic paragraph directly after an image) */
-.columns p:has(> picture:only-child) + p:not(:has(picture)) {
+/* image captions (small paragraph directly after an image) */
+.columns:not(.aside) p:has(> picture:only-child) + p:not(:has(picture)) {
   font-size: var(--body-font-size-xs);
   line-height: 1.2;
 }
@@ -46,34 +41,12 @@
   margin-bottom: 0;
 }
 
-/* call to action: button with lotus icon */
-.columns .columns-cta {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.columns .columns-cta .button-wrapper {
-  margin: calc(10 * var(--m)) 0 calc(20 * var(--m));
-}
-
-.columns .columns-cta .button:any-link {
-  min-width: calc(100 * var(--m));
-  min-height: calc(24 * var(--m));
-  font-size: calc(11 * var(--m));
-}
-
-.columns .columns-cta-icon {
-  margin: 0;
-}
-
-
-/* tiles and split rows: full-bleed image beside text */
+/* full-bleed image columns (tiles, split and aside rows) */
 .columns.tiles > div > .columns-img-col,
 .columns.split > div > .columns-img-col,
 .columns.aside > div > .columns-img-col {
   position: relative;
-  aspect-ratio: 320 / 164;
+  height: calc(164 * var(--m));
   padding: 0;
 }
 
@@ -98,28 +71,158 @@
   object-fit: cover;
 }
 
-.columns.tiles > div > div:not(.columns-img-col) {
-  padding: calc(25 * var(--m)) calc(15 * var(--m)) calc(35 * var(--m));
-  text-align: center;
-}
-
-.columns.tiles h2 {
-  margin: 0 0 calc(10 * var(--m));
-  font-size: calc(23 * var(--m));
-  letter-spacing: 0.04em;
-}
-
-.columns.tiles p {
-  font-size: var(--body-font-size-l);
-  line-height: 1.7;
-}
-
 .columns.aside > div > .columns-img-col {
   display: none;
 }
 
 .columns.first-white > div > div:first-child {
   background-color: var(--white-color);
+}
+
+/*
+ * Home page tiles mirror the source layout grid: a heading row, a text row and rows for
+ * the button and the lotus icon, each placed with fixed margins and offsets (values per
+ * tile below), so longer text pushes the following items down.
+ */
+.columns.tiles > div {
+  --tile-img: 164;
+  --tile-h-size: 23;
+  --tile-h-lh: 28;
+  --tile-h-mt: 20;
+  --tile-h-mb: 10;
+  --tile-h-x: 20;
+  --tile-h-w: 280;
+  --tile-p-mb: 24;
+  --tile-p-x: 20;
+  --tile-p-w: 280;
+  --tile-b-row: 3;
+  --tile-b-mt: 0;
+  --tile-b-mb: 10;
+  --tile-b-x: 79;
+  --tile-i-row: 4;
+  --tile-i-mb: 20;
+  --tile-i-x: 100;
+  --tile-i-w: 120;
+}
+
+.columns.tiles > div:nth-child(2) {
+  --tile-img: 154;
+  --tile-h-size: 26;
+  --tile-h-lh: 36.4;
+  --tile-h-mb: 30;
+  --tile-p-mb: 32;
+  --tile-p-x: 24;
+  --tile-b-x: 83;
+  --tile-i-x: 115;
+  --tile-i-w: 90;
+}
+
+.columns.tiles > div:nth-child(3) {
+  --tile-img: 167;
+  --tile-h-size: 28;
+  --tile-h-lh: 39.2;
+  --tile-h-mt: 24;
+  --tile-h-mb: 21;
+  --tile-h-x: 17;
+  --tile-p-mb: 10;
+  --tile-p-x: 21;
+  --tile-b-row: 4;
+  --tile-b-mb: 20;
+  --tile-b-x: 86;
+  --tile-i-row: 3;
+  --tile-i-mb: 10;
+  --tile-i-x: 110;
+  --tile-i-w: 100;
+}
+
+.columns.tiles > div > .columns-img-col {
+  order: -1;
+  height: calc(var(--tile-img) * var(--m));
+}
+
+.columns.tiles > div > div:not(.columns-img-col) {
+  display: grid;
+  grid-template-columns: 100%;
+  align-items: start;
+  padding: 0;
+  text-align: center;
+}
+
+.columns.tiles > div > div:not(.columns-img-col) > * {
+  position: relative;
+  box-sizing: border-box;
+  justify-self: start;
+  max-width: none;
+  margin: 0;
+}
+
+.columns.tiles > div > div > h2 {
+  grid-row: 1;
+  width: calc(var(--tile-h-w) * var(--m));
+  margin: calc(var(--tile-h-mt) * var(--m)) 0 calc(var(--tile-h-mb) * var(--m));
+  left: calc(var(--tile-h-x) * var(--m));
+  font-size: calc(var(--tile-h-size) * var(--m));
+  letter-spacing: 0.05em;
+  line-height: calc(var(--tile-h-lh) * var(--m));
+}
+
+.columns.tiles > div > div > p {
+  grid-row: 2;
+  width: calc(var(--tile-p-w) * var(--m));
+  margin: 0 0 calc(var(--tile-p-mb) * var(--m));
+  left: calc(var(--tile-p-x) * var(--m));
+  font-size: calc(20 * var(--m));
+  line-height: calc(34 * var(--m));
+}
+
+.columns.tiles .columns-cta {
+  display: contents;
+}
+
+.columns.tiles .columns-cta .button-wrapper {
+  position: relative;
+  grid-row: var(--tile-b-row);
+  grid-column: 1;
+  justify-self: start;
+  margin: calc(var(--tile-b-mt) * var(--m)) 0 calc(var(--tile-b-mb) * var(--m));
+  left: calc(var(--tile-b-x) * var(--m));
+  line-height: 0;
+}
+
+.columns.tiles .columns-cta .button:any-link {
+  width: calc(160 * var(--m));
+  min-width: 0;
+  height: calc(42 * var(--m));
+  min-height: 0;
+  padding: 0;
+  font-size: calc(14 * var(--m));
+}
+
+.columns.tiles .columns-cta-icon {
+  position: relative;
+  grid-row: var(--tile-i-row);
+  grid-column: 1;
+  justify-self: start;
+  margin: 0 0 calc(var(--tile-i-mb) * var(--m));
+  left: calc(var(--tile-i-x) * var(--m));
+  line-height: 0;
+}
+
+.columns.tiles .columns-cta-icon img {
+  width: calc(var(--tile-i-w) * var(--m));
+  max-width: none;
+  margin: 0;
+}
+
+/* call to action outside the tiles: button with lotus icon */
+.columns:not(.tiles) .columns-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.columns:not(.tiles) .columns-cta .button-wrapper {
+  margin: calc(10 * var(--m)) 0 calc(20 * var(--m));
 }
 
 @media (width >= 768px) {
@@ -133,7 +236,6 @@
     flex: 1 1 50%;
     flex-direction: column;
     align-items: center;
-    order: unset;
     min-width: 0;
     padding: 56px 20px 40px;
   }
@@ -144,15 +246,11 @@
     max-width: 460px;
   }
 
-  .columns > div > .columns-img-col {
-    order: unset;
-  }
-
   .columns p:has(> picture:only-child) {
     margin-bottom: 40px;
   }
 
-  .columns p:has(> picture:only-child) + p:not(:has(picture)) {
+  .columns:not(.aside) p:has(> picture:only-child) + p:not(:has(picture)) {
     margin-top: -32px;
     margin-bottom: 40px;
     font-size: 14px;
@@ -162,62 +260,134 @@
     width: auto;
   }
 
-  /* home page tiles */
-  .columns.tiles > div {
-    min-height: var(--row-height, 507px);
-  }
-
   .columns.tiles > div > .columns-img-col,
   .columns.split > div > .columns-img-col,
   .columns.aside > div > .columns-img-col {
     display: block;
-    aspect-ratio: auto;
+    height: auto;
+  }
+
+  /* home page tiles: desktop grid values (offsets relative to a centred 490px box) */
+  .columns.tiles > div {
+    --tile-h-lh: 43;
+    --tile-h-mt: 56;
+    --tile-h-mb: 22;
+    --tile-h-x: 4;
+    --tile-h-w: 486;
+    --tile-p-mb: -6;
+    --tile-p-x: 16;
+    --tile-p-w: 446;
+    --tile-b-row: 3;
+    --tile-b-mt: 53;
+    --tile-b-mb: 10;
+    --tile-b-x: 177;
+    --tile-i-row: 3;
+    --tile-i-mb: 48;
+    --tile-i-x: 315;
+
+    height: var(--row-height, 507px);
+  }
+
+  .columns.tiles > div:nth-child(2) {
+    --tile-h-lh: 50.4;
+    --tile-h-mt: 82;
+    --tile-h-mb: 31;
+    --tile-h-x: 88;
+    --tile-h-w: 310;
+    --tile-p-mb: 34;
+    --tile-p-x: 4;
+    --tile-p-w: 471;
+    --tile-b-mt: 78;
+    --tile-b-x: 172;
+    --tile-i-mb: 10;
+    --tile-i-x: 348;
+  }
+
+  .columns.tiles > div:nth-child(3) {
+    --tile-h-lh: 50.4;
+    --tile-h-mt: 36;
+    --tile-h-mb: 15;
+    --tile-h-x: 89;
+    --tile-h-w: 310;
+    --tile-p-mb: -49;
+    --tile-p-x: 9;
+    --tile-p-w: 470;
+    --tile-b-row: 3;
+    --tile-b-mt: 75;
+    --tile-b-mb: 10;
+    --tile-b-x: 197;
+    --tile-i-row: 3;
+    --tile-i-mb: 10;
+    --tile-i-x: 341;
+  }
+
+  .columns.tiles > div > .columns-img-col {
+    order: 0;
+    height: auto;
   }
 
   .columns.tiles > div > div:not(.columns-img-col) {
-    padding: 56px 40px 40px;
+    display: grid;
+    grid-template-rows: min-content min-content 1fr;
+    align-items: start;
   }
 
   .columns.tiles > div > div:not(.columns-img-col) > * {
-    max-width: 486px;
+    width: auto;
+    max-width: none;
   }
 
-  .columns.tiles h2 {
-    margin-bottom: 18px;
+  .columns.tiles > div > div > h2 {
+    width: calc(var(--tile-h-w) * 1px);
+    margin: calc(var(--tile-h-mt) * 1px) 0 calc(var(--tile-h-mb) * 1px) calc((100% - 490px) * 0.5);
+    left: calc(var(--tile-h-x) * 1px);
     font-size: 36px;
-    letter-spacing: 0.05em;
+    line-height: calc(var(--tile-h-lh) * 1px);
   }
 
-  .columns.tiles p {
+  .columns.tiles > div > div > p {
+    width: calc(var(--tile-p-w) * 1px);
+    margin: 0 0 calc(var(--tile-p-mb) * 1px) calc((100% - 490px) * 0.5);
+    left: calc(var(--tile-p-x) * 1px);
     font-size: 20px;
     line-height: 34px;
   }
 
-  .columns .columns-cta {
+  .columns.tiles .columns-cta .button-wrapper {
+    margin: calc(var(--tile-b-mt) * 1px) 0 calc(var(--tile-b-mb) * 1px) calc((100% - 490px) * 0.5);
+    left: calc(var(--tile-b-x) * 1px);
+  }
+
+  .columns.tiles .columns-cta .button:any-link {
+    width: 120px;
+    height: 28px;
+    font-size: 13px;
+  }
+
+  .columns.tiles .columns-cta-icon {
+    margin: 0 0 calc(var(--tile-i-mb) * 1px) calc((100% - 490px) * 0.5);
+    left: calc(var(--tile-i-x) * 1px);
+  }
+
+  .columns.tiles .columns-cta-icon img {
+    width: auto;
+  }
+
+  .columns:not(.tiles) .columns-cta {
     position: relative;
     margin-top: 12px;
   }
 
-  .columns .columns-cta .button-wrapper {
+  .columns:not(.tiles) .columns-cta .button-wrapper {
     margin: 0;
   }
 
-  .columns .columns-cta .button:any-link {
-    min-width: 120px;
-    min-height: 28px;
-    font-size: 13px;
-  }
-
-  .columns .columns-cta-icon {
+  .columns:not(.tiles) .columns-cta-icon {
     position: absolute;
     top: 50%;
     left: calc(50% + 78px);
     width: auto;
     transform: translateY(-50%);
-  }
-
-  .columns .columns-cta-icon img {
-    max-width: none;
   }
 
   /* split rows: left aligned text beside a full-bleed image */

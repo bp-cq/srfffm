@@ -119,7 +119,9 @@ function buildHome(document, main, lang) {
       img.alt = '';
       const text = document.createElement('div');
       text.innerHTML = s.html;
-      return [cell(document, [img]), cell(document, [...text.childNodes])];
+      const align = document.createElement('p');
+      align.textContent = s.align;
+      return [cell(document, [img]), cell(document, [...text.childNodes]), cell(document, [align])];
     });
     main.append(block(document, 'Slideshow', rows), hr(document));
   }
@@ -202,6 +204,7 @@ function buildContact(document, main, lang) {
 function buildPrivacy(document, main, lang) {
   const comps = pageSections(document).flatMap((s) => allContent(s));
   convertComponents(document, comps, lang).forEach((n) => main.append(n));
+  main.append(sectionMetadata(document, 'legal'));
 }
 
 function buildImprint(document, main, lang) {
@@ -419,7 +422,8 @@ async function prepare(document) {
         const lang = getLang(win.location.href);
         convertRichText(document, text, lang, { allowHeadings: false }).forEach((n) => holder.append(n));
       }
-      slides.push({ key: src.split('/v1/')[0], src: cleanImageUrl(src, 2), html: holder.innerHTML });
+      const align = { b: 'bottom', t: 'top' }[(src.match(/,al_([a-z]+)/) || [])[1]] || 'center';
+      slides.push({ key: src.split('/v1/')[0], src: src.split('/v1/')[0], align, html: holder.innerHTML });
       if (!next) break;
       next.click();
       // eslint-disable-next-line no-await-in-loop
@@ -462,7 +466,7 @@ export default {
         main.append(metadata(document, { Robots: 'noindex, nofollow' }));
       } else {
         path = `/${lang}/${slug}`;
-        main.append(metadata(document, { Title: document.title }));
+        main.append(metadata(document, { Title: document.title, Template: slug === 'index' ? 'home' : slug }));
       }
     }
 

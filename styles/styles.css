@@ -39,7 +39,7 @@
   --m: calc(100vw / 320);
 
   /* body sizes */
-  --body-font-size-l: calc(20 * var(--m));
+  --body-font-size-l: calc(18 * var(--m));
   --body-font-size-m: calc(18 * var(--m));
   --body-font-size-s: calc(16 * var(--m));
   --body-font-size-xs: calc(14 * var(--m));
@@ -91,7 +91,7 @@
     --heading-font-size-s: 18px;
 
     /* nav height */
-    --nav-height: 327px;
+    --nav-height: 319px;
   }
 }
 
@@ -110,6 +110,13 @@ body.appear {
   display: block;
 }
 
+/* like the source, tablets and narrow windows get the 980px desktop canvas */
+@media (width >= 768px) {
+  body {
+    min-width: 980px;
+  }
+}
+
 header {
   height: var(--nav-height);
 }
@@ -126,7 +133,7 @@ footer .footer[data-block-status="loaded"] {
 
 /* links */
 a:any-link {
-  color: var(--link-color);
+  color: inherit;
   text-decoration: underline;
   overflow-wrap: break-word;
 }
@@ -154,12 +161,13 @@ h1,
 h2 {
   font-size: var(--heading-font-size-xl);
   font-style: italic;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 h3 {
   font-size: var(--heading-font-size-l);
   font-style: italic;
+  font-weight: 300;
 }
 
 h4 {
@@ -167,10 +175,15 @@ h4 {
   font-weight: 600;
 }
 
-h5,
-h6 {
+h5 {
   font-size: var(--heading-font-size-s);
   font-weight: 600;
+}
+
+h6 {
+  font-size: var(--heading-font-size-m);
+  font-style: italic;
+  font-weight: 300;
 }
 
 h1 a:any-link,
@@ -412,4 +425,38 @@ main > .section.legal a:any-link {
 /* events page introduction: highlighted notes (e.g. summer break) */
 main > .section.program strong {
   color: #8a0f34;
+}
+
+/* back to top (phones) */
+.back-to-top {
+  position: fixed;
+  left: calc(14 * var(--m));
+  bottom: calc(174 * var(--m));
+  z-index: 19;
+  width: calc(50 * var(--m));
+  height: calc(50 * var(--m));
+  border: 0;
+  padding: 0;
+  background: none;
+  opacity: 0;
+  visibility: hidden;
+  cursor: pointer;
+  transition: visibility 0.5s, opacity 0.5s;
+}
+
+.back-to-top.visible {
+  opacity: 0.69;
+  visibility: visible;
+}
+
+.back-to-top img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (width >= 768px) {
+  .back-to-top {
+    display: none;
+  }
 }

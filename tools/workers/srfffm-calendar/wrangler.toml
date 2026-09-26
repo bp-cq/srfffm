@@ -20,7 +20,7 @@ PAGES = "/de/services,/en/services"
 # Create with: wrangler kv namespace create CALENDAR_STATE (then paste the returned id).
 [[kv_namespaces]]
 binding = "CALENDAR_STATE"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "4ec7378c39734318a9958957f6ee11d1"
 
 [observability]
 enabled = true

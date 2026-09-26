@@ -83,6 +83,26 @@ export function createImage(document, img, { scale = 1, alt } = {}) {
   return el;
 }
 
+/** Whether a computed colour is a blue tone (quote text on the source) */
+function isBlue(color) {
+  const [r, g, b] = (color.match(/\d+/g) || []).map(Number);
+  return b > r + 40 && b > g;
+}
+
+/** Whether the text of an element is underlined (not as a link) */
+function isUnderlined(el) {
+  if (el.querySelector('a')) return false;
+  const walker = el.ownerDocument.createTreeWalker(el, 4);
+  let n = walker.nextNode();
+  while (n && isEmptyText(n.textContent)) n = walker.nextNode();
+  let e = n && n.parentElement;
+  while (e && el.contains(e)) {
+    if (styleOf(e).textDecorationLine.includes('underline')) return true;
+    e = e.parentElement;
+  }
+  return false;
+}
+
 function styleOf(el) {
   return el.ownerDocument.defaultView.getComputedStyle(el);
 }
@@ -120,7 +140,7 @@ function convertInline(document, node, lang, base) {
     const bold = Number(cs.fontWeight) >= 600 && Number(ps.fontWeight) < 600;
     const italic = cs.fontStyle === 'italic' && ps.fontStyle !== 'italic';
     const colored = base.highlight && cs.color === ORANGE && ps.color !== ORANGE;
-    const accent = base.accent && cs.color !== ps.color && cs.color !== base.color;
+    const accent = base.accent && cs.color !== ps.color && isBlue(cs.color);
     if ((bold || colored) && inner.textContent.trim()) {
       const s = document.createElement('strong');
       s.append(wrapped);
@@ -189,8 +209,11 @@ export function convertRichText(document, el, lang, { highlight = false, allowHe
       flush();
       return;
     }
-    const level = allowHeadings ? headingLevel(child) : null;
+    const level = allowHeadings ? (headingLevel(child) || (isUnderlined(child) ? 4 : null)) : null;
     const base = styleOf(child);
+    const lineStyle = textStyle(child);
+    const size = parseFloat(lineStyle.fontSize);
+    const bold = Number(lineStyle.fontWeight) >= 600;
     const inline = convertInline(document, child, lang, {
       fontWeight: base.fontWeight, fontStyle: base.fontStyle, color: base.color, highlight, accent,
     });
@@ -203,10 +226,16 @@ export function convertRichText(document, el, lang, { highlight = false, allowHe
       out.push(h);
       return;
     }
+    if (current && current.dataset.size && Number(current.dataset.size) !== size
+      && (bold || current.dataset.bold === 'true')) {
+      current = null;
+    }
     if (current) {
       current.append(document.createElement('br'), inline);
     } else {
       current = document.createElement('p');
+      current.dataset.size = size;
+      current.dataset.bold = bold;
       current.append(inline);
       out.push(current);
     }
@@ -215,6 +244,10 @@ export function convertRichText(document, el, lang, { highlight = false, allowHe
   out.forEach((node) => {
     while (node.lastChild && node.lastChild.nodeName === 'BR') node.lastChild.remove();
     while (node.firstChild && node.firstChild.nodeName === 'BR') node.firstChild.remove();
+  });
+  out.forEach((n) => {
+    delete n.dataset.size;
+    delete n.dataset.bold;
   });
   return out.filter((n) => n.textContent.trim() || n.querySelector('img'));
 }

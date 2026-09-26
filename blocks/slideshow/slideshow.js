@@ -7,6 +7,11 @@ const LABELS = {
   en: { prev: 'Previous', next: 'Next', region: 'Slideshow' },
 };
 
+// optional third cell per slide: which part of the image stays visible when it is cropped
+const ALIGN = {
+  bottom: 'bottom', unten: 'bottom', top: 'top', oben: 'top', center: 'center', mitte: 'center',
+};
+
 const ARROW = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 41" aria-hidden="true"><path d="M20.3 40.8 0 20.5 20.3.2l.7.7L1.3 20.5 21 40.1z"/></svg>';
 
 /**
@@ -34,9 +39,13 @@ export default function decorate(block) {
   const slides = [...block.children];
   slides.forEach((row) => {
     row.classList.add('slideshow-slide');
-    [...row.children].forEach((cell) => {
+    [...row.children].forEach((cell, i) => {
+      const align = ALIGN[cell.textContent.trim().toLowerCase()];
       if (cell.querySelector('picture') && !cell.textContent.trim()) {
         cell.classList.add('slideshow-image');
+      } else if (i > 1 && align) {
+        row.dataset.align = align;
+        cell.remove();
       } else if (cell.textContent.trim()) {
         cell.classList.add('slideshow-text');
       } else {

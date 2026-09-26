@@ -4,6 +4,12 @@
   move-to-http-header="true"
 />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script nonce="aem">
+  /* like the source site, tablets narrower than the 980px desktop canvas get it scaled to fit */
+  if (window.screen.width >= 768 && window.screen.width < 980) {
+    document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=980');
+  }
+</script>
 <script nonce="aem" src="/scripts/aem.js" type="module"></script>
 <script nonce="aem" src="/scripts/scripts.js" type="module"></script>
 <link rel="stylesheet" href="/styles/styles.css"/>
