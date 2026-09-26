@@ -94,7 +94,7 @@
   }
 
   .about main .columns h2 {
-    width: calc(250 * var(--m));
+    width: calc(220 * var(--m));
     font-size: calc(26 * var(--m));
     line-height: calc(36.4 * var(--m));
   }
@@ -216,6 +216,15 @@
   .news main .columns p:has(> strong:only-child) + p {
     font-size: calc(15 * var(--m));
     line-height: calc(21 * var(--m));
+  }
+
+  .news main .columns p:has(> strong:only-child) ~ p:has(> strong:only-child) {
+    line-height: calc(20.4 * var(--m));
+  }
+
+  .news main .columns > div > div:not(.columns-img-col) > p:last-child {
+    font-size: calc(17 * var(--m));
+    line-height: calc(23.8 * var(--m));
   }
 }
 
