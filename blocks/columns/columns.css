@@ -259,8 +259,6 @@
   }
 
   .columns:not(.aside) p:has(> picture:only-child) + p:not(:has(picture)) {
-    margin-top: -32px;
-    margin-bottom: 40px;
     font-size: 14px;
   }
 

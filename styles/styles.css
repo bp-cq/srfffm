@@ -391,7 +391,7 @@ main > .section.quote p i {
 
 /* long legal text (privacy policy) */
 main > .section.legal {
-  padding: 0 0 calc(20 * var(--m));
+  padding: calc(21.6 * var(--m)) 0 calc(20 * var(--m));
   font-size: calc(17 * var(--m));
   line-height: calc(20 * var(--m));
 }

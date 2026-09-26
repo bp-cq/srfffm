@@ -1,12 +1,13 @@
 /*
  * Page layouts. The source site places every element on a fixed layout grid: each column
- * has a centred 490px box (320px on phones) and each element a fixed offset, width and
- * margin within it. These rules mirror those values per page (body class = page template).
+ * has a centred 490px box (a 320px wide canvas on phones) and each element a fixed offset,
+ * width and margin within it. These rules mirror those values per page (body class = the
+ * page template from the page metadata).
  *
- * Column cells use custom properties, children inherit them:
+ * Column cells set custom properties that their children inherit:
  *   --l / --pl   left offset in the column box (desktop px / phone m)
- *   --w / --pw   width
- *   --mt / --pmt margin above the first element
+ *   --w / --pw   width (desktop px / phone m)
+ *   --mt / --pmt margin above the first element (desktop px / phone m)
  */
 /* stylelint-disable no-descending-specificity -- per page values override the shared rules */
 
@@ -77,29 +78,35 @@
 }
 
 /* ---------------------------------------------------------------- about */
-.about main .columns > div:nth-child(1) > div:nth-child(1) {
-  --pmt: 10;
-}
+@media (width < 768px) {
+  .about main .columns > div:nth-child(1) > div:nth-child(1) {
+    --pmt: 10;
+  }
 
-.about main .columns > div:nth-child(1) > div:nth-child(1) > :nth-child(2) {
-  margin-top: calc(10 * var(--m));
-}
+  .about main .columns > div:nth-child(1) > div:nth-child(1) > :nth-child(2) {
+    margin-top: calc(10 * var(--m));
+  }
 
-.about main .columns > div:nth-child(1) > div:nth-child(2) {
-  --pl: 10;
-  --pw: 300;
-  --pmt: 7;
-}
+  .about main .columns > div:nth-child(1) > div:nth-child(2) {
+    --pl: 10;
+    --pw: 300;
+    --pmt: 7;
+  }
 
-.about main .columns h2 {
-  font-size: calc(26 * var(--m));
-  line-height: calc(36.4 * var(--m));
-}
+  .about main .columns h2 {
+    font-size: calc(26 * var(--m));
+    line-height: calc(36.4 * var(--m));
+  }
 
-/* the small lotus signs are not shown on phones */
-.about main .columns > div:nth-child(1) > div:nth-child(2) > :last-child,
-.about main .columns > div:nth-child(3) > div:nth-child(2) > :first-child {
-  display: none;
+  /* the small lotus signs are not shown on phones */
+  .about main .columns > div:nth-child(1) > div:nth-child(2) > :last-child,
+  .about main .columns > div:nth-child(3) > div:nth-child(2) > :first-child {
+    display: none;
+  }
+
+  .about main .columns > div:nth-child(3) > div:nth-child(2) > :nth-child(2) {
+    margin-top: calc(20 * var(--m));
+  }
 }
 
 @media (width >= 768px) {
@@ -129,7 +136,6 @@
   }
 
   .about main .columns > div:nth-child(1) > div:nth-child(2) > :last-child {
-    display: block;
     position: absolute;
     top: 841px;
     width: auto;
@@ -165,49 +171,56 @@
   }
 
   .about main .columns > div:nth-child(3) > div:nth-child(2) > :first-child {
-    display: block;
     width: auto;
     margin: 9px 0 11px calc((100% - 490px) / 2 + 195px);
   }
 }
 
 /* ---------------------------------------------------------------- news */
-.news main .columns > div > div:not(.columns-img-col) > :first-child {
-  font-size: calc(18 * var(--m));
-  line-height: normal;
-  margin-bottom: calc(10 * var(--m));
-}
-
-.news main .columns h3 {
-  margin: 0 0 calc(20 * var(--m));
-  font-size: calc(22 * var(--m));
-}
-
 .news main .columns h4 {
-  margin: 0 0 1lh;
   color: var(--text-color);
-  font-size: calc(17 * var(--m));
   text-decoration: underline;
 }
 
-.news main .columns p:has(> strong:only-child) {
-  margin-bottom: 0;
-  font-size: calc(17 * var(--m));
-  line-height: calc(23.8 * var(--m));
-}
+@media (width < 768px) {
+  .news main .columns > div > .columns-img-col {
+    order: -1;
+    height: calc(272 * var(--m));
+    margin-top: calc(-10 * var(--m));
+  }
 
-.news main .columns p:has(> strong:only-child) + p {
-  font-size: calc(15 * var(--m));
-  line-height: calc(21 * var(--m));
-}
+  .news main .columns > div > div:not(.columns-img-col) > :first-child {
+    margin-bottom: calc(10 * var(--m));
+    font-size: calc(18 * var(--m));
+    line-height: calc(21.6 * var(--m));
+  }
 
-.news main .columns > div > .columns-img-col {
-  height: calc(272 * var(--m));
+  .news main .columns h3 {
+    margin: 0 0 calc(20 * var(--m));
+    font-size: calc(22 * var(--m));
+  }
+
+  .news main .columns h4 {
+    margin: 0 0 calc(20.4 * var(--m));
+    font-size: calc(17 * var(--m));
+    line-height: calc(20.4 * var(--m));
+  }
+
+  .news main .columns p:has(> strong:only-child) {
+    margin-bottom: 0;
+    font-size: calc(17 * var(--m));
+    line-height: calc(23.8 * var(--m));
+  }
+
+  .news main .columns p:has(> strong:only-child) + p {
+    font-size: calc(15 * var(--m));
+    line-height: calc(21 * var(--m));
+  }
 }
 
 @media (width >= 768px) {
   .news main .columns > div {
-    min-height: 1122px;
+    height: 1122px;
   }
 
   .news main .columns > div > div:not(.columns-img-col) {
@@ -217,79 +230,91 @@
 
   .news main .columns > div > div:not(.columns-img-col) > :first-child {
     width: 133px;
-    margin: 16px 0 20px calc((100% - 490px) / 2 + 345px);
+    margin: 16px 0 16px calc((100% - 490px) / 2 + 345px);
     font-size: 18px;
+    line-height: 21.6px;
   }
 
   .news main .columns h3 {
-    margin-bottom: 20px;
+    margin: 0 0 26.6px;
     font-size: 26px;
   }
 
   .news main .columns h4 {
+    margin: 0 0 22px;
     font-size: 20px;
   }
 
   .news main .columns p:has(> strong:only-child) {
+    margin-bottom: 0;
     font-size: 20px;
     line-height: 28px;
   }
 
+  .news main .columns p:has(> strong:only-child) ~ p:has(> strong:only-child) {
+    line-height: 24px;
+  }
+
   .news main .columns p:has(> strong:only-child) + p {
+    margin-bottom: 23.2px;
     font-size: 18px;
     line-height: 25.2px;
   }
 }
 
 /* ---------------------------------------------------- self-realization fellowship */
-.self-realization-fellowship main .columns p:has(> picture:only-child) + p,
-.self-realization-fellowship main .columns > div > div:nth-child(1) > :last-child {
-  margin-top: 0;
-  margin-bottom: calc(20 * var(--m));
+.self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > p:not(:has(picture)) {
   font-size: calc(14 * var(--m));
   line-height: normal;
 }
 
-.self-realization-fellowship main .columns > div > div:nth-child(1) > p:has(> picture:only-child) {
-  margin-bottom: calc(10 * var(--m));
-}
+@media (width < 768px) {
+  .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) {
+    --pmt: 30;
+  }
 
-.self-realization-fellowship main .columns h2 {
-  margin: 0;
-  font-size: calc(26 * var(--m));
-  line-height: calc(36.4 * var(--m));
-}
+  .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > p:has(> picture:only-child) {
+    margin-bottom: calc(10 * var(--m));
+  }
 
-.self-realization-fellowship main .columns > div > div:nth-child(1) img {
-  height: calc(222 * var(--m));
-  object-fit: cover;
-}
+  .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > p:not(:has(picture)) {
+    margin-bottom: calc(20 * var(--m));
+  }
 
-.self-realization-fellowship main .columns > div > div:nth-child(1) > p:nth-child(3) img {
-  height: calc(218 * var(--m));
-}
+  .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) img {
+    height: calc(222 * var(--m));
+    object-fit: cover;
+  }
 
-.self-realization-fellowship main .columns > div > div:nth-child(2) {
-  --pl: 14;
-  --pw: 299;
-}
+  .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > :nth-child(3) img {
+    height: calc(218 * var(--m));
+  }
 
-.self-realization-fellowship main .section:nth-child(2) .columns > div > div:nth-child(1) {
-  --pl: 16;
-  --pw: 300;
-  --pmt: 9;
-}
+  .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(2) {
+    --pl: 14;
+    --pw: 299;
+    --pmt: 0;
+  }
 
-.self-realization-fellowship main .section:nth-child(2) .columns > div > .columns-img-col {
-  height: calc(151 * var(--m));
+  .self-realization-fellowship main .columns h2 {
+    margin: 0;
+    font-size: calc(26 * var(--m));
+    line-height: calc(36.4 * var(--m));
+  }
+
+  .self-realization-fellowship main .section:nth-child(2) .columns > div > .columns-img-col {
+    order: -1;
+    height: calc(151 * var(--m));
+  }
+
+  .self-realization-fellowship main .section:nth-child(2) .columns > div > div:nth-child(1) {
+    --pl: 16;
+    --pw: 300;
+    --pmt: 9;
+  }
 }
 
 @media (width >= 768px) {
-  .self-realization-fellowship main .columns > div > div:nth-child(1) img {
-    height: auto;
-    object-fit: fill;
-  }
-
   .self-realization-fellowship main .section:nth-child(1) .columns > div {
     min-height: 836px;
   }
@@ -303,6 +328,11 @@
     margin-bottom: 9px;
   }
 
+  .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > :nth-child(1) img {
+    width: 436px;
+    height: 213px;
+  }
+
   .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > :nth-child(2) {
     width: 434px;
     margin-bottom: 57px;
@@ -310,8 +340,12 @@
   }
 
   .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > :nth-child(3) {
-    width: auto;
     margin: 0 0 14px calc((100% - 490px) / 2 + 115px);
+  }
+
+  .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > :nth-child(3) img {
+    width: 204px;
+    height: 331px;
   }
 
   .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > :nth-child(4) {
@@ -320,13 +354,15 @@
     font-size: 14px;
   }
 
+  /* the text box starts with an empty heading line */
   .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(2) {
     --l: 16;
     --w: 459;
-    --mt: 33;
+    --mt: 83.4;
   }
 
   .self-realization-fellowship main .columns h2 {
+    margin: 0;
     font-size: 36px;
     line-height: 50.4px;
   }
@@ -340,48 +376,49 @@
     --w: 461;
     --mt: 49;
   }
-
-  .self-realization-fellowship main .section:nth-child(2) .columns > div > .columns-img-col {
-    height: auto;
-  }
 }
 
 /* ---------------------------------------------------------------- meditation */
-.meditation main .columns > div:nth-child(1) > div:nth-child(1) {
-  --pl: 10;
-  --pmt: 10;
-}
+@media (width < 768px) {
+  .meditation main .columns > div:nth-child(1) > div:nth-child(1) {
+    --pl: 10;
+    --pmt: 10;
+  }
 
-.meditation main .columns > div:nth-child(1) > div:nth-child(1) > :nth-child(2) {
-  width: calc(300 * var(--m));
-  font-size: calc(14 * var(--m));
-  font-style: italic;
-  line-height: normal;
-}
+  .meditation main .columns > div:nth-child(1) > div:nth-child(1) img {
+    height: calc(221 * var(--m));
+    object-fit: cover;
+  }
 
-.meditation main .columns h3 {
-  margin: 0 0 calc(20 * var(--m));
-  font-size: calc(23 * var(--m));
-}
+  .meditation main .columns > div:nth-child(1) > div:nth-child(1) > :nth-child(2) {
+    width: calc(300 * var(--m));
+    font-size: calc(14 * var(--m));
+    font-style: italic;
+    line-height: normal;
+  }
 
-.meditation main .columns > div:nth-child(2) > div:nth-child(1) {
-  --pl: 14;
-  --pw: 300;
-  --pmt: 3;
+  .meditation main .columns h3 {
+    margin: 0 0 calc(20 * var(--m));
+    font-size: calc(23 * var(--m));
+  }
 
-  font-size: calc(19 * var(--m));
-  line-height: calc(26.6 * var(--m));
-}
+  .meditation main .columns > div:nth-child(2) > div:nth-child(1) {
+    --pl: 14;
+    --pw: 300;
+    --pmt: 3;
 
-.meditation main .columns > div:nth-child(2) > div:nth-child(2) {
-  --pl: 25;
-  --pw: 270;
-  --pmt: 7;
-}
+    font-size: calc(19 * var(--m));
+    line-height: calc(26.6 * var(--m));
+  }
 
-/* phones: the text comes before the picture in the second row */
-.meditation main .columns > div:nth-child(2) > .columns-img-col {
-  order: 1;
+  /* phones: the text comes before the picture in the second row */
+  .meditation main .columns > div:nth-child(2) > .columns-img-col {
+    --pl: 25;
+    --pw: 270;
+    --pmt: 7;
+
+    order: 1;
+  }
 }
 
 @media (width >= 768px) {
@@ -400,18 +437,24 @@
 
   .meditation main .columns > div:nth-child(1) > div:nth-child(1) > :nth-child(2) {
     width: 424px;
-    margin-left: calc((100% - 490px) / 2 + 19px);
+    margin: 0 0 26px calc((100% - 490px) / 2 + 19px);
     font-size: 14px;
+    font-style: italic;
+    line-height: normal;
   }
 
   .meditation main .columns > div:nth-child(1) > div:nth-child(2) {
     --l: 14;
     --w: 456;
-    --mt: 36;
+    --mt: 32;
+  }
+
+  .meditation main .columns > div:nth-child(1) > div:nth-child(2) p {
+    margin-bottom: 14px;
   }
 
   .meditation main .columns h3 {
-    margin-bottom: 20px;
+    margin: 0 0 7.6px;
     font-size: 26px;
   }
 
@@ -422,10 +465,14 @@
   .meditation main .columns > div:nth-child(2) > div:nth-child(1) {
     --l: 20;
     --w: 456;
-    --mt: 77;
+    --mt: 74.4;
 
     font-size: 21px;
     line-height: 29.4px;
+  }
+
+  .meditation main .columns > div:nth-child(2) > div:nth-child(1) > p:first-child {
+    margin-bottom: 22.6px;
   }
 
   .meditation main .columns > div:nth-child(2) > div:nth-child(2) {
@@ -444,19 +491,6 @@
 }
 
 /* ---------------------------------------------------------------- contact */
-.contact main .columns > div > div:nth-child(1) {
-  --pl: 10;
-  --pw: 300;
-  --pmt: 25;
-
-  font-size: calc(17 * var(--m));
-  line-height: calc(23.8 * var(--m));
-}
-
-.contact main .columns p:first-child {
-  color: #757575;
-}
-
 .contact main .columns a:any-link {
   color: var(--link-color);
 }
@@ -465,32 +499,37 @@
   color: #4682b4;
 }
 
-/* phones: only the addresses are shown */
-.contact main .columns > div > div:nth-child(2),
-.contact main .section.map-container {
-  display: none;
+@media (width < 768px) {
+  .contact main .columns > div > div:nth-child(1) {
+    --pl: 10;
+    --pw: 300;
+    --pmt: 45;
+
+    font-size: calc(17 * var(--m));
+    line-height: calc(23.8 * var(--m));
+  }
+
+  .contact main .columns > div > div:nth-child(1) p {
+    margin-bottom: calc(28 * var(--m));
+  }
+
+  /* phones: only the addresses are shown */
+  .contact main .columns > div > div:nth-child(2),
+  .contact main .section.map-container {
+    display: none;
+  }
 }
 
 @media (width >= 768px) {
-  .contact main .section.map-container {
-    display: block;
-  }
-
-  .contact main .columns {
-    max-width: none;
-  }
-
   .contact main .columns > div {
     display: block;
     position: relative;
     width: 980px;
-    min-height: 542px;
+    height: 542px;
     margin: 0 auto;
   }
 
   .contact main .columns > div > div:nth-child(1) {
-    --l: 29;
-    --w: 579;
     --mt: 33;
 
     font-size: 18px;
@@ -498,52 +537,72 @@
   }
 
   .contact main .columns > div > div:nth-child(1) > * {
+    width: 579px;
     margin-left: 29px;
   }
 
+  .contact main .columns > div > div:nth-child(1) p {
+    margin-bottom: 29.4px;
+  }
+
   .contact main .columns > div > div:nth-child(2) {
-    display: block;
+    --mt: 0;
+
     position: absolute;
     top: 2px;
     left: 654px;
   }
 
   .contact main .columns > div > div:nth-child(2) > * {
-    width: auto;
     margin: 0;
   }
 }
 
 /* ---------------------------------------------------------------- imprint */
-.imprint main .columns > div > div:not(.columns-img-col) {
-  --pl: 16;
-  --pmt: 20;
-
-  font-size: calc(14 * var(--m));
-  line-height: calc(25.2 * var(--m));
+.imprint main .columns > div > div:not(.columns-img-col) > h2 {
+  font-weight: 500;
 }
 
-.imprint main .columns h2 {
-  margin: 0 0 calc(13 * var(--m)) calc(4 * var(--m));
-  font-size: calc(26 * var(--m));
-  font-weight: 400;
+.imprint main .columns > div > div:not(.columns-img-col) > h4 {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
-.imprint main .columns h4 {
-  margin: 0 0 1lh;
-  font-size: calc(15 * var(--m));
-  line-height: calc(21 * var(--m));
-}
+@media (width < 768px) {
+  .imprint main .columns > div > div:not(.columns-img-col) {
+    --pl: 16;
+    --pmt: 20;
 
-.imprint main .columns p:has(> strong:only-child),
-.imprint main .columns p:has(> picture) ~ p {
-  font-size: calc(15 * var(--m));
-  line-height: calc(27 * var(--m));
-}
+    font-size: calc(14 * var(--m));
+    line-height: calc(25.2 * var(--m));
+  }
 
-.imprint main .columns p:has(> picture) img {
-  width: calc(212 * var(--m));
-  margin: 0 0 0 calc(-5 * var(--m));
+  .imprint main .columns > div > div:not(.columns-img-col) > h2 {
+    margin: calc(20 * var(--m)) 0 calc(13 * var(--m)) calc(20 * var(--m));
+    font-size: calc(26 * var(--m));
+  }
+
+  .imprint main .columns > div > div:not(.columns-img-col) > h4 {
+    font-size: calc(15 * var(--m));
+    line-height: calc(21 * var(--m));
+  }
+
+  .imprint main .columns > div > div:not(.columns-img-col) > h4:first-of-type {
+    margin-bottom: calc(19.6 * var(--m));
+  }
+
+  .imprint main .columns p:has(> strong:only-child),
+  .imprint main .columns p:has(> picture) ~ p {
+    font-size: calc(15 * var(--m));
+    line-height: calc(27 * var(--m));
+  }
+
+  .imprint main .columns p:has(> picture) img {
+    width: calc(212 * var(--m));
+    height: calc(26 * var(--m));
+    margin-left: calc(-5 * var(--m));
+    object-fit: cover;
+  }
 }
 
 @media (width >= 768px) {
@@ -552,10 +611,6 @@
   }
 
   .imprint main .columns > div > div:not(.columns-img-col) {
-    --l: -2;
-    --w: 634;
-    --mt: 88;
-
     flex: 1 1 auto;
     min-height: 1314px;
     padding: 0;
@@ -563,19 +618,24 @@
     line-height: 32.4px;
   }
 
-  .imprint main .columns h2 {
-    margin: 88px 0 16px calc((100% - 654px) / 2 + 4px);
+  .imprint main .columns > div > div:not(.columns-img-col) > * {
+    width: 634px;
+    margin-left: calc((100% - 654px) / 2 - 2px);
+  }
+
+  .imprint main .columns > div > div:not(.columns-img-col) > h2 {
+    margin: 84px 0 23px calc((100% - 654px) / 2 + 4px);
     font-size: 36px;
     line-height: normal;
   }
 
-  .imprint main .columns > div > div:not(.columns-img-col) > * {
-    margin-left: calc((100% - 654px) / 2 - 2px);
-  }
-
-  .imprint main .columns h4 {
+  .imprint main .columns > div > div:not(.columns-img-col) > h4 {
     font-size: 20px;
     line-height: 28px;
+  }
+
+  .imprint main .columns > div > div:not(.columns-img-col) > h4:first-of-type {
+    margin-bottom: 25.2px;
   }
 
   .imprint main .columns p:has(> strong:only-child),
@@ -584,8 +644,11 @@
     line-height: 36px;
   }
 
-  .imprint main .columns p:has(> picture) img {
+  .imprint main .columns > div > div:not(.columns-img-col) > p:has(> picture) {
+    position: relative;
+    top: 4.4px;
     width: auto;
-    margin: 0 0 0 1px;
+    margin-bottom: 11px;
+    margin-left: calc((100% - 654px) / 2 - 1px);
   }
 }
