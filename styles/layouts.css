@@ -93,7 +93,7 @@
     --pmt: 7;
   }
 
-  .about main .columns h2 {
+  .about main .columns > div > div > h2 {
     width: calc(220 * var(--m));
     font-size: calc(26 * var(--m));
     line-height: calc(36.4 * var(--m));
