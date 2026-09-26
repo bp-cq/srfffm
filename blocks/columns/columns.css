@@ -281,8 +281,9 @@
   /* home page tiles: desktop grid values (offsets relative to a centred 490px box) */
   .columns.tiles > div,
   .columns.tiles > div:nth-child(1) {
+    --tile-h-dy: -2;
     --tile-h-lh: 43;
-    --tile-h-mt: 54;
+    --tile-h-mt: 56;
     --tile-h-mb: 22;
     --tile-h-x: 4;
     --tile-h-w: 486;
@@ -350,6 +351,7 @@
   }
 
   .columns.tiles > div > div:not(.columns-img-col) > h2 {
+    top: calc(var(--tile-h-dy, 0) * 1px);
     width: calc(var(--tile-h-w) * 1px);
     margin: calc(var(--tile-h-mt) * 1px) 0 calc(var(--tile-h-mb) * 1px) calc((100% - 490px) * 0.5);
     left: calc(var(--tile-h-x) * 1px);
