@@ -154,7 +154,7 @@ footer .consent-banner-actions {
   display: flex;
   flex-direction: column-reverse;
   gap: calc(12 * var(--m));
-  margin: calc(22 * var(--m)) calc(-6 * var(--m)) 0;
+  margin: calc(22 * var(--m)) calc(6 * var(--m)) calc(10 * var(--m)) calc(-6 * var(--m));
 }
 
 footer .consent-banner-actions button {

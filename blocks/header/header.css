@@ -221,7 +221,6 @@ header nav .nav-sections a[aria-current='page'] {
 @media (width >= 768px) {
   header .nav-wrapper {
     min-width: 980px;
-    height: 319px;
   }
 
   header nav {
@@ -259,7 +258,7 @@ header nav .nav-sections a[aria-current='page'] {
   }
 
   header nav .nav-brand p:first-child + p {
-    margin-top: 4px;
+    margin-top: 10px;
     font-size: 15px;
     letter-spacing: 0.3px;
     line-height: 30px;
@@ -291,7 +290,7 @@ header nav .nav-sections a[aria-current='page'] {
   header nav .nav-sections {
     display: block;
     position: absolute;
-    inset: 252px -6px auto 0;
+    inset: 260px -6px auto 0;
     overflow: visible;
   }
 

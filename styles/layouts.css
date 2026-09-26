@@ -522,10 +522,31 @@
     margin-bottom: calc(28 * var(--m));
   }
 
-  /* phones: only the addresses are shown */
+  .contact main .columns > div > div:nth-child(1) > :last-child {
+    margin-bottom: calc(39 * var(--m));
+  }
+
+  /* phones: no flowers picture; the map fills the source's map box, the lotus is hidden */
   .contact main .columns > div > div:nth-child(2),
-  .contact main .section.map-container {
+  .contact main .section.map-container > .default-content-wrapper {
     display: none;
+  }
+
+  .contact main .section.map-container {
+    padding: 0 0 calc(10 * var(--m));
+  }
+
+  .contact main .section.map-container > .map-wrapper {
+    padding: 0 0 0 calc(11 * var(--m));
+  }
+
+  .contact main .map {
+    width: calc(280 * var(--m));
+  }
+
+  .contact main .map .map-frame {
+    aspect-ratio: auto;
+    height: calc(279 * var(--m));
   }
 }
 
