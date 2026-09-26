@@ -107,6 +107,6 @@
     width: 989px;
     max-width: calc(100% - 40px);
     font-size: 24px;
-    transform: translateX(calc(-50% + 142px));
+    transform: translateX(calc(-50% + 123.5px));
   }
 }

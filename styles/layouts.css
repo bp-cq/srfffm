@@ -47,7 +47,7 @@
   margin: 0;
 }
 
-:is(.about, .news, .self-realization-fellowship, .meditation, .contact, .imprint) main .columns .columns-img-col > * {
+:is(.news, .self-realization-fellowship, .imprint) main :is(.columns.split, .columns.aside) .columns-img-col > * {
   width: 100%;
   margin: 0;
 }

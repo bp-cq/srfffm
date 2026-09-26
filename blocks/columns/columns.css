@@ -407,11 +407,6 @@
     min-height: var(--row-height, 627px);
   }
 
-  .columns.split > div > div:not(.columns-img-col) {
-    align-items: flex-start;
-    padding: 26px 110px 40px 116px;
-  }
-
   /* imprint: narrow decorative image beside the text */
   .columns.aside > div > .columns-img-col {
     flex: 0 0 33.33%;
@@ -419,33 +414,6 @@
 
   .columns.aside > div > div:not(.columns-img-col) {
     flex: 1 1 66.67%;
-    align-items: flex-start;
-    padding: 90px 40px 60px 152px;
     background-color: var(--white-color);
-  }
-
-  .columns.aside > div > div:not(.columns-img-col) > * {
-    max-width: 630px;
-  }
-
-  /* wide rows (contact): content sits in the regular content width */
-  .columns.wide {
-    max-width: var(--content-width);
-    margin: auto;
-    font-size: 18px;
-  }
-
-  .columns.wide > div > div {
-    align-items: flex-start;
-    padding: 40px 29px;
-  }
-
-  .columns.wide > div > div:last-child {
-    flex: 0 0 auto;
-    align-items: flex-end;
-  }
-
-  .columns.wide > div > div > * {
-    max-width: none;
   }
 }

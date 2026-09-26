@@ -179,6 +179,43 @@ function headingLevel(el) {
   return null;
 }
 
+/** Font size of the first visible text after (or before) a node inside a paragraph */
+function sizeNear(p, node, forward) {
+  const walker = p.ownerDocument.createTreeWalker(p, 4);
+  const texts = [];
+  let n = walker.nextNode();
+  while (n) {
+    if (!isEmptyText(n.textContent)) texts.push(n);
+    n = walker.nextNode();
+  }
+  // eslint-disable-next-line no-bitwise
+  const after = (t) => (node.compareDocumentPosition(t) & 4) !== 0;
+  const t = forward ? texts.find(after) : texts.reverse().find((x) => !after(x));
+  return t ? parseFloat(styleOf(t.parentElement).fontSize) : null;
+}
+
+/** Splits a Wix paragraph at line breaks where the font size changes (e.g. a quote and its author) */
+function splitAtSizeChanges(p) {
+  const parts = [];
+  let rest = p;
+  const brs = [...p.querySelectorAll('br')];
+  brs.forEach((br) => {
+    if (!rest.contains(br)) return;
+    const before = sizeNear(rest, br, false);
+    const after = sizeNear(rest, br, true);
+    if (before === null || after === null || Math.abs(before - after) < 2) return;
+    const range = p.ownerDocument.createRange();
+    range.setStart(rest, 0);
+    range.setEndBefore(br);
+    const head = rest.cloneNode(false);
+    head.append(range.extractContents());
+    rest.before(head);
+    br.remove();
+    parts.push(head);
+  });
+  return [...parts, rest];
+}
+
 /**
  * Converts a Wix rich text element into clean block nodes.
  * Consecutive Wix paragraphs are joined with line breaks; empty Wix paragraphs
@@ -188,7 +225,9 @@ export function convertRichText(document, el, lang, { highlight = false, allowHe
   const out = [];
   let current = null;
   const flush = () => { current = null; };
-  const blocks = [...el.children].flatMap((c) => (['div', 'section'].includes(c.tagName.toLowerCase()) ? [...c.children] : [c]));
+  const blocks = [...el.children]
+    .flatMap((c) => (['div', 'section'].includes(c.tagName.toLowerCase()) ? [...c.children] : [c]))
+    .flatMap((c) => (c.tagName === 'P' && c.querySelector('br') ? splitAtSizeChanges(c) : [c]));
   blocks.forEach((child) => {
     const tag = child.tagName.toLowerCase();
     const text = child.textContent;
