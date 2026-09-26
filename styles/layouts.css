@@ -38,6 +38,10 @@
   margin-bottom: 1lh;
 }
 
+:is(.about, .news, .self-realization-fellowship, .meditation, .contact, .imprint) main .columns picture {
+  display: block;
+}
+
 :is(.about, .news, .self-realization-fellowship, .meditation, .contact, .imprint) main .columns img {
   width: 100%;
   margin: 0;
@@ -63,6 +67,11 @@
   }
 
   :is(.about, .news, .self-realization-fellowship, .meditation, .contact, .imprint) main .columns img {
+    width: auto;
+  }
+
+  /* images keep their own (source) size */
+  :is(.about, .news, .self-realization-fellowship, .meditation, .contact, .imprint) main .columns > div > div > :is(picture, p:has(> picture:only-child)) {
     width: auto;
   }
 }
@@ -114,6 +123,7 @@
   }
 
   .about main .columns h2 {
+    margin-bottom: 23px;
     font-size: 36px;
     line-height: 50.4px;
   }

@@ -30,6 +30,20 @@ function setRowHeight(row, img) {
   if (width && height) row.style.setProperty('--row-height', `${Math.round((720 * height) / width)}px`);
 }
 
+/**
+ * Wraps the text paragraphs of a tile (everything between heading and call to action).
+ * @param {Element} col The tile text cell
+ */
+function wrapTileText(col) {
+  const paras = [...col.children].filter((el) => el.tagName === 'P' && !el.classList.contains('button-wrapper')
+    && !(el.querySelector('picture') && !el.textContent.trim()));
+  if (!paras.length) return;
+  const text = document.createElement('div');
+  text.className = 'columns-text';
+  paras[0].before(text);
+  text.append(...paras);
+}
+
 export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
   block.classList.add(`columns-${cols.length}-cols`);
@@ -50,6 +64,7 @@ export default function decorate(block) {
       col.querySelectorAll('img').forEach((img) => {
         if (Number(img.getAttribute('width')) <= 180) img.classList.add('columns-icon');
       });
+      if (block.classList.contains('tiles') && !col.classList.contains('columns-img-col')) wrapTileText(col);
       groupCallToAction(col);
     });
   });

@@ -166,13 +166,21 @@
   line-height: calc(var(--tile-h-lh) * var(--m));
 }
 
-.columns.tiles > div > div:not(.columns-img-col) > p {
+.columns.tiles > div > div:not(.columns-img-col) > .columns-text {
   grid-row: 2;
   width: calc(var(--tile-p-w) * var(--m));
   margin: 0 0 calc(var(--tile-p-mb) * var(--m));
   left: calc(var(--tile-p-x) * var(--m));
   font-size: calc(20 * var(--m));
   line-height: calc(34 * var(--m));
+}
+
+.columns.tiles .columns-text p {
+  margin: 0;
+}
+
+.columns.tiles .columns-text p + p {
+  font-size: calc(18 * var(--m));
 }
 
 .columns.tiles .columns-cta {
@@ -345,12 +353,16 @@
     line-height: calc(var(--tile-h-lh) * 1px);
   }
 
-  .columns.tiles > div > div:not(.columns-img-col) > p {
+  .columns.tiles > div > div:not(.columns-img-col) > .columns-text {
     width: calc(var(--tile-p-w) * 1px);
     margin: 0 0 calc(var(--tile-p-mb) * 1px) calc((100% - 490px) * 0.5);
     left: calc(var(--tile-p-x) * 1px);
     font-size: 20px;
     line-height: 34px;
+  }
+
+  .columns.tiles .columns-text p + p {
+    font-size: 18px;
   }
 
   .columns.tiles .columns-cta .button-wrapper {

@@ -226,8 +226,7 @@ export function convertRichText(document, el, lang, { highlight = false, allowHe
       out.push(h);
       return;
     }
-    if (current && current.dataset.size && Number(current.dataset.size) !== size
-      && (bold || current.dataset.bold === 'true')) {
+    if (current && current.dataset.size && Math.abs(Number(current.dataset.size) - size) >= 2) {
       current = null;
     }
     if (current) {
