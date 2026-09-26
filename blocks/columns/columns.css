@@ -105,6 +105,11 @@
   --tile-i-w: 120;
 }
 
+.columns.tiles > div:nth-child(1) {
+  --tile-h-x: 35;
+  --tile-h-w: 250;
+}
+
 .columns.tiles > div:nth-child(2) {
   --tile-img: 154;
   --tile-h-size: 26;
@@ -274,7 +279,8 @@
   }
 
   /* home page tiles: desktop grid values (offsets relative to a centred 490px box) */
-  .columns.tiles > div {
+  .columns.tiles > div,
+  .columns.tiles > div:nth-child(1) {
     --tile-h-lh: 43;
     --tile-h-mt: 56;
     --tile-h-mb: 22;
@@ -300,10 +306,10 @@
     --tile-h-mb: 31;
     --tile-h-x: 88;
     --tile-h-w: 310;
-    --tile-p-mb: 34;
+    --tile-p-mb: 36;
     --tile-p-x: 4;
     --tile-p-w: 471;
-    --tile-b-mt: 78;
+    --tile-b-mt: 79;
     --tile-b-x: 172;
     --tile-i-mb: 10;
     --tile-i-x: 348;
@@ -315,11 +321,11 @@
     --tile-h-mb: 15;
     --tile-h-x: 89;
     --tile-h-w: 310;
-    --tile-p-mb: -49;
+    --tile-p-mb: -47;
     --tile-p-x: 9;
     --tile-p-w: 470;
     --tile-b-row: 3;
-    --tile-b-mt: 75;
+    --tile-b-mt: 76;
     --tile-b-mb: 10;
     --tile-b-x: 197;
     --tile-i-row: 3;

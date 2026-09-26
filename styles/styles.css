@@ -437,6 +437,7 @@ main > .section.legal a:any-link {
 /* map section (contact): lotus icon to the right of the map */
 @media (width >= 768px) {
   main > .section.map-container {
+    display: flow-root;
     position: relative;
     height: 503px;
     padding: 0;

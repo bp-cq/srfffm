@@ -92,16 +92,21 @@ footer .footer li a:any-link {
 
   footer .footer ul {
     position: absolute;
-    top: 205px;
-    right: 27px;
+    top: 203px;
+    right: 8px;
     display: flex;
-    gap: 65px;
+    gap: 44px;
     margin: 0;
   }
 
   footer .footer li {
+    width: 172px;
     margin: 0;
     line-height: 1.4;
+  }
+
+  footer .footer li + li {
+    width: 124px;
   }
 
   footer .footer li a:any-link {

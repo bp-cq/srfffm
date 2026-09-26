@@ -94,6 +94,7 @@
   }
 
   .about main .columns h2 {
+    width: calc(250 * var(--m));
     font-size: calc(26 * var(--m));
     line-height: calc(36.4 * var(--m));
   }
@@ -252,7 +253,7 @@
   }
 
   .news main .columns p:has(> strong:only-child) ~ p:has(> strong:only-child) {
-    line-height: 24px;
+    line-height: 25.7px;
   }
 
   .news main .columns p:has(> strong:only-child) + p {
@@ -273,7 +274,7 @@
     --pmt: 30;
   }
 
-  .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > p:has(> picture:only-child) {
+  .self-realization-fellowship main .section:nth-child(1) .columns > div > div:nth-child(1) > p:has(picture) {
     margin-bottom: calc(10 * var(--m));
   }
 
@@ -382,7 +383,15 @@
 @media (width < 768px) {
   .meditation main .columns > div:nth-child(1) > div:nth-child(1) {
     --pl: 10;
-    --pmt: 10;
+    --pmt: 20;
+  }
+
+  .meditation main .columns > div:nth-child(1) > div:nth-child(2) p {
+    margin-bottom: calc(15.4 * var(--m));
+  }
+
+  .meditation main .columns > div:nth-child(2) > div:nth-child(1) > p:first-child {
+    margin-bottom: calc(19 * var(--m));
   }
 
   .meditation main .columns > div:nth-child(1) > div:nth-child(1) img {
@@ -398,7 +407,7 @@
   }
 
   .meditation main .columns h3 {
-    margin: 0 0 calc(20 * var(--m));
+    margin: 0 0 calc(3 * var(--m));
     font-size: calc(23 * var(--m));
   }
 
@@ -522,7 +531,7 @@
 
 @media (width >= 768px) {
   .contact main .columns > div {
-    display: block;
+    display: flow-root;
     position: relative;
     width: 980px;
     height: 542px;
@@ -588,7 +597,11 @@
   }
 
   .imprint main .columns > div > div:not(.columns-img-col) > h4:first-of-type {
-    margin-bottom: calc(19.6 * var(--m));
+    margin-bottom: calc(15.1 * var(--m));
+  }
+
+  .imprint main .columns > div > div:not(.columns-img-col) > p:has(> picture) {
+    margin-bottom: calc(17.5 * var(--m));
   }
 
   .imprint main .columns p:has(> strong:only-child),
@@ -623,8 +636,12 @@
     margin-left: calc((100% - 654px) / 2 - 2px);
   }
 
+  .imprint main .columns > div {
+    margin-top: -2px;
+  }
+
   .imprint main .columns > div > div:not(.columns-img-col) > h2 {
-    margin: 84px 0 23px calc((100% - 654px) / 2 + 4px);
+    margin: 86px 0 27px calc((100% - 654px) / 2 + 4px);
     font-size: 36px;
     line-height: normal;
   }
@@ -635,7 +652,7 @@
   }
 
   .imprint main .columns > div > div:not(.columns-img-col) > h4:first-of-type {
-    margin-bottom: 25.2px;
+    margin-bottom: 21.2px;
   }
 
   .imprint main .columns p:has(> strong:only-child),
@@ -648,7 +665,7 @@
     position: relative;
     top: 4.4px;
     width: auto;
-    margin-bottom: 11px;
+    margin-bottom: 18.4px;
     margin-left: calc((100% - 654px) / 2 - 1px);
   }
 }
