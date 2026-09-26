@@ -637,6 +637,10 @@
     margin-bottom: calc(17.5 * var(--m));
   }
 
+  .imprint main .columns > div > div:not(.columns-img-col) > p:has(+ p > picture) {
+    margin-bottom: calc(10.7 * var(--m));
+  }
+
   .imprint main .columns p:has(> strong:only-child),
   .imprint main .columns p:has(> picture) ~ p {
     font-size: calc(15 * var(--m));
