@@ -156,7 +156,7 @@
   margin: 0;
 }
 
-.columns.tiles > div > div > h2 {
+.columns.tiles > div > div:not(.columns-img-col) > h2 {
   grid-row: 1;
   width: calc(var(--tile-h-w) * var(--m));
   margin: calc(var(--tile-h-mt) * var(--m)) 0 calc(var(--tile-h-mb) * var(--m));
@@ -166,7 +166,7 @@
   line-height: calc(var(--tile-h-lh) * var(--m));
 }
 
-.columns.tiles > div > div > p {
+.columns.tiles > div > div:not(.columns-img-col) > p {
   grid-row: 2;
   width: calc(var(--tile-p-w) * var(--m));
   margin: 0 0 calc(var(--tile-p-mb) * var(--m));
@@ -337,7 +337,7 @@
     max-width: none;
   }
 
-  .columns.tiles > div > div > h2 {
+  .columns.tiles > div > div:not(.columns-img-col) > h2 {
     width: calc(var(--tile-h-w) * 1px);
     margin: calc(var(--tile-h-mt) * 1px) 0 calc(var(--tile-h-mb) * 1px) calc((100% - 490px) * 0.5);
     left: calc(var(--tile-h-x) * 1px);
@@ -345,7 +345,7 @@
     line-height: calc(var(--tile-h-lh) * 1px);
   }
 
-  .columns.tiles > div > div > p {
+  .columns.tiles > div > div:not(.columns-img-col) > p {
     width: calc(var(--tile-p-w) * 1px);
     margin: 0 0 calc(var(--tile-p-mb) * 1px) calc((100% - 490px) * 0.5);
     left: calc(var(--tile-p-x) * 1px);

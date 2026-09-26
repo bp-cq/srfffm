@@ -221,6 +221,7 @@ header nav .nav-sections a[aria-current='page'] {
 @media (width >= 768px) {
   header .nav-wrapper {
     min-width: 980px;
+    height: 319px;
   }
 
   header nav {

@@ -91,7 +91,7 @@
     --heading-font-size-s: 18px;
 
     /* nav height */
-    --nav-height: 319px;
+    --nav-height: 327px;
   }
 }
 
@@ -325,7 +325,8 @@ main > .section.grey {
 main > .section.intro {
   padding: calc(20 * var(--m)) 0;
   text-align: center;
-  font-size: var(--body-font-size-m);
+  font-size: calc(17 * var(--m));
+  line-height: calc(20 * var(--m));
 }
 
 main > .section.intro strong {
@@ -335,65 +336,79 @@ main > .section.intro strong {
 
 @media (width >= 768px) {
   main > .section.intro {
-    padding: 18px 0 6px;
+    padding: 19px 0 21px;
     font-size: 20px;
-    line-height: 1.2;
+    line-height: 24px;
+  }
+
+  main > .section.intro > .default-content-wrapper {
+    padding: 0 5px 0 0;
   }
 }
 
 /* quote band (meditation and self-realization pages) */
 main > .section.quote {
-  padding: calc(30 * var(--m)) 0;
-  text-align: center;
+  padding: calc(44 * var(--m)) 0 calc(20 * var(--m));
+}
+
+main > .section.quote > .default-content-wrapper {
+  padding: 0 calc(17 * var(--m)) 0 calc(23 * var(--m));
 }
 
 main > .section.quote p {
   margin: 0;
-  color: var(--text-color);
-  font-size: var(--body-font-size-m);
+  color: var(--button-color);
+  font-size: calc(19 * var(--m));
   font-style: italic;
-  font-weight: 400;
+  font-weight: 300;
+  line-height: normal;
 }
 
 main > .section.quote p em,
 main > .section.quote p i {
-  color: var(--blue-color);
-  font-size: calc(20 * var(--m));
-  font-weight: 400;
+  color: #4682b4;
+  font-size: calc(22 * var(--m));
 }
 
 @media (width >= 768px) {
   main > .section.quote {
-    padding: 40px 0;
-    text-align: left;
+    padding: 43px 0 40px;
+  }
+
+  main > .section.quote > .default-content-wrapper {
+    padding: 0 9px 0 16px;
   }
 
   main > .section.quote p {
-    font-size: 20px;
-    line-height: 1.5;
+    font-size: 22px;
   }
 
   main > .section.quote p em,
   main > .section.quote p i {
     font-size: 26px;
-    line-height: 1.2;
   }
 }
 
 /* long legal text (privacy policy) */
 main > .section.legal {
-  font-size: var(--body-font-size-s);
+  padding: 0 0 calc(20 * var(--m));
+  font-size: calc(17 * var(--m));
+  line-height: calc(20 * var(--m));
 }
 
-main > .section.legal h3 {
-  margin-top: 1.2em;
-  font-size: var(--heading-font-size-m);
+main > .section.legal > .default-content-wrapper {
+  padding: 0 calc(20 * var(--m));
 }
 
-main > .section.legal h4 {
-  margin: 1em 0 0;
-  color: var(--text-color);
-  font-size: var(--body-font-size-s);
+main > .section.legal :is(h1, h2, h3, h4, h5, h6) {
+  margin: 0 0 1lh;
+  font-size: calc(17 * var(--m));
+  line-height: calc(20 * var(--m));
+}
+
+main > .section.legal p,
+main > .section.legal ul {
+  margin: 0 0 1lh;
 }
 
 main > .section.legal a:any-link {
@@ -402,8 +417,20 @@ main > .section.legal a:any-link {
 
 @media (width >= 768px) {
   main > .section.legal {
-    font-size: 16px;
-    line-height: 1.4;
+    padding: 32px 0 10px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  main > .section.legal > .default-content-wrapper {
+    width: 918px;
+    padding: 0;
+    transform: translateX(-3px);
+  }
+
+  main > .section.legal :is(h1, h2, h3, h4, h5, h6) {
+    font-size: 20px;
+    line-height: 24px;
   }
 }
 
@@ -411,7 +438,8 @@ main > .section.legal a:any-link {
 @media (width >= 768px) {
   main > .section.map-container {
     position: relative;
-    padding: 40px 0;
+    height: 503px;
+    padding: 0;
   }
 
   main > .section.map-container > .default-content-wrapper {
