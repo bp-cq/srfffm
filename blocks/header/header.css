@@ -74,7 +74,7 @@ header nav .nav-brand p:first-child + p {
 /* hamburger */
 header nav .nav-hamburger {
   position: absolute;
-  top: calc(80 * var(--m));
+  top: calc(75 * var(--m));
   right: calc(14 * var(--m));
   z-index: 3;
 }
@@ -122,7 +122,7 @@ header nav .nav-hamburger-icon::after {
 
 header nav[aria-expanded='true'] .nav-hamburger {
   position: fixed;
-  top: calc(80 * var(--m));
+  top: calc(75 * var(--m));
 }
 
 header nav[aria-expanded='true'] .nav-hamburger-icon {
@@ -258,7 +258,7 @@ header nav .nav-sections a[aria-current='page'] {
   }
 
   header nav .nav-brand p:first-child + p {
-    margin-top: 10px;
+    margin-top: 4px;
     font-size: 15px;
     letter-spacing: 0.3px;
     line-height: 30px;
@@ -290,7 +290,7 @@ header nav .nav-sections a[aria-current='page'] {
   header nav .nav-sections {
     display: block;
     position: absolute;
-    inset: 260px -6px auto 0;
+    inset: 252px -6px auto 0;
     overflow: visible;
   }
 

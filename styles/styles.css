@@ -54,7 +54,7 @@
   --content-width: 980px;
 
   /* nav height */
-  --nav-height: calc(126 * var(--m));
+  --nav-height: calc(121 * var(--m));
 }
 
 /* fallback fonts */
@@ -91,7 +91,7 @@
     --heading-font-size-s: 18px;
 
     /* nav height */
-    --nav-height: 327px;
+    --nav-height: 319px;
   }
 }
 
